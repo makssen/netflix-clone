@@ -48,8 +48,6 @@ const Search = () => {
             .then(resp => !resp.errors ? setResult(resp.results) : setResult([]))
     }
 
-    console.log(result.poster_path);
-
     return (
         <Paper className={classes.filmPost} elevation={3}>
             <Box p={3}>
@@ -69,7 +67,7 @@ const Search = () => {
                 />
                 <Card style={{ width: 300 }}>
                     <ul className={classes.searchList}>
-                        {result.map(item => <NavLink className={classes.searchLink} to={`/film_preview#${item.id}`}> <li className={classes.searchItem}>{item.title}</li></NavLink>)}
+                        {result.map((item, i) => <NavLink key={`${item}-${i}`} className={classes.searchLink} to={`/film_preview#${item.id}`}> <li className={classes.searchItem}>{item.title}</li></NavLink>)}
                     </ul>
                 </Card>
             </Box>
