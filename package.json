@@ -2,7 +2,7 @@
     "name": "netflix-clone",
     "version": "0.1.0",
     "private": true,
-    "homepage": " https://makssen.github.io/netflix-clone",
+    "homepage": " https://makssen.github.io/netflix-clone/",
     "dependencies": {
         "@material-ui/core": "^4.11.3",
         "@material-ui/icons": "^4.11.2",
