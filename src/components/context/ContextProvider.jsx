@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useMemo, useState } from 'react';
+import { ApiService } from '../../services/ApiService';
 
 export const Context = createContext({
     films: [],
@@ -28,13 +29,14 @@ export const ContextProvider = ({ children }) => {
         setWatchFilms(prev => prev.filter(item => item.title !== name));
     }
 
+    const fetchFilms = async () => {
+        const resp = await ApiService().get('popular');
+        setFilms(resp)
+        setRandomFilm(resp.results[Math.floor(Math.random() * 20)])
+    }
+
     useEffect(() => {
-        fetch('https://api.themoviedb.org/3/movie/popular?api_key=108a3dcad1f9a8ddef8c60eac64385d7')
-            .then(resp => resp.json())
-            .then(resp => {
-                setFilms(resp)
-                setRandomFilm(resp.results[Math.floor(Math.random() * 20)])
-            })
+        fetchFilms();
     }, []);
 
 

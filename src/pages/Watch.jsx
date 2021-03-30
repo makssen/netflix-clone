@@ -31,8 +31,6 @@ const Watch = () => {
 
     const { watchFilms, deleteToWatch } = useContext(Context);
 
-    const [deleteAnimation, setDeleteAnimation] = useState(false);
-
     return (
         <Grid container spacing={3}>
             {watchFilms.length > 0 ? (watchFilms.map(item =>

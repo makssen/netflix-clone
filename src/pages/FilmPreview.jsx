@@ -46,7 +46,7 @@ const FilmPreview = () => {
         <div className={classes.root}>
             <Paper className={classes.filmPost} elevation={3}>
                 <div className="Post">
-                    <img className={classes.img} src={`https://image.tmdb.org/t/p/w500/${film.poster_path}`} alt="film" />
+                    <img className={classes.img} src={film.poster_path ? `https://image.tmdb.org/t/p/w500/${film.poster_path}` : ''} alt="film" />
                 </div>
                 <Box p={3}>
                     <div className="Description">

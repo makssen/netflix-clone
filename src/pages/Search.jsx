@@ -4,6 +4,10 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import { Box, Card, CardActions, Typography } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
+import { useContext } from 'react';
+import { Context } from '../components/context/ContextProvider';
+import { useDebounce } from '../components/hooks/useDebounce';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,14 +43,25 @@ const Search = () => {
     const [query, setQuery] = useState('');
     const [result, setResult] = useState([]);
 
-    const searchFilm = (e) => {
+    const searchValue = useDebounce(query, 800);
+
+    const handleChange = (e) => {
         e.preventDefault();
         setQuery(e.target.value);
-
-        fetch(`https://api.themoviedb.org/3/search/movie?api_key=108a3dcad1f9a8ddef8c60eac64385d7&language=en-US&page=1&include_adult=false&query=${e.target.value}`)
-            .then(resp => resp.json())
-            .then(resp => !resp.errors ? setResult(resp.results) : setResult([]))
     }
+
+    const searchFilm = async () => {
+        if (searchValue) {
+            await fetch(`https://api.themoviedb.org/3/search/movie?api_key=108a3dcad1f9a8ddef8c60eac64385d7&language=en-US&page=1&include_adult=false&query=${searchValue}`)
+                .then(resp => resp.json())
+                .then(resp => !resp.errors ? setResult(resp.results) : setResult([]))
+        }
+    }
+
+    useEffect(() => {
+        searchFilm();
+    }, [searchValue]);
+
 
     return (
         <Paper className={classes.filmPost} elevation={3}>
@@ -55,7 +70,7 @@ const Search = () => {
                     Search
                 </Typography>
                 <TextField
-                    onChange={searchFilm}
+                    onChange={handleChange}
                     className={classes.root}
                     id="outlined-textarea"
                     label="Search film"
